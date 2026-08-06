@@ -43,6 +43,16 @@ def build_llm(settings: Settings, temperature: float = 0.0):
             base_url=settings.ollama_base_url,
             temperature=temperature,
         )
+    if provider == "groq":
+        import os
+        api_key = settings.custom_llm_api_key or os.getenv("GROQ_API_KEY")
+        base_url = settings.custom_llm_base_url or "https://api.groq.com/openai/v1"
+        return ChatOpenAI(
+            model=settings.model_name,
+            api_key=api_key,
+            base_url=base_url,
+            temperature=temperature,
+        )
     if provider == "custom":
         return ChatOpenAI(
             model=settings.model_name,

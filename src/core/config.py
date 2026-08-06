@@ -141,6 +141,8 @@ def normalized_provider(settings: Settings) -> str:
         return "anthropic"
     if provider == "customllm":
         return "custom"
+    if provider in {"groq", "groqai"}:
+        return "groq"
     return provider
 
 
@@ -164,10 +166,14 @@ def require_llm_credentials(settings: Settings) -> None:
         raise RuntimeError("OPENROUTER_API_KEY is required when LLM_PROVIDER=openrouter.")
     if provider == "ollama":
         return
+    if provider == "groq":
+        if settings.custom_llm_api_key or os.getenv("GROQ_API_KEY"):
+            return
+        raise RuntimeError("GROQ_API_KEY or CUSTOM_LLM_API_KEY is required when LLM_PROVIDER=groq.")
     if provider == "custom":
         if settings.custom_llm_base_url:
             return
         raise RuntimeError("CUSTOM_LLM_BASE_URL is required when LLM_PROVIDER=custom.")
     raise RuntimeError(
-        "Unsupported LLM_PROVIDER. Expected one of: openai, gemini, anthropic, openrouter, ollama, custom."
+        "Unsupported LLM_PROVIDER. Expected one of: openai, gemini, anthropic, openrouter, ollama, groq, custom."
     )

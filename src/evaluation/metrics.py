@@ -109,11 +109,13 @@ def evaluate_pipeline(
 ) -> EvaluationBundle:
     test_set = read_json(test_set_path)
     answers: list[dict[str, Any]] = []
+    total = len(test_set)
 
-    for item in test_set:
+    for idx, item in enumerate(test_set, start=1):
         result = answer_question(item["question"], settings=settings, index=index)
         judge = _judge_answer(settings, item["question"], item["ground_truth"], result.answer)
         retrieval_hit = any(doc_id in item["ground_truth_doc_ids"] for doc_id in result.retrieved_doc_ids)
+        print(f"      [Evaluating {idx}/{total}] Hit: {retrieval_hit} | Judge Score: {judge.score}/5 | Type: {item['question_type']}")
         answers.append(
             {
                 "id": item["id"],
