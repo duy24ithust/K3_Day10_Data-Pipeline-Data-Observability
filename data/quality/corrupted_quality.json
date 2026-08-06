@@ -1,0 +1,45 @@
+{
+  "report_name": "corrupted_quality",
+  "timestamp": "2026-08-06T03:47:05.034268+00:00",
+  "total_rows": 23,
+  "passed": false,
+  "checks": {
+    "row_count": {
+      "passed": true,
+      "count": 23
+    },
+    "paper_id_uniqueness": {
+      "passed": false,
+      "null_count": 0,
+      "duplicate_count": 2
+    },
+    "title_completeness": {
+      "passed": true,
+      "empty_count": 0
+    },
+    "summary_quality": {
+      "passed": false,
+      "empty_count": 4,
+      "short_count": 4
+    },
+    "freshness": {
+      "passed": false,
+      "stale_count": 1,
+      "threshold_days": 180
+    },
+    "embedding_text": {
+      "passed": true,
+      "missing_count": 0
+    }
+  },
+  "summary_metrics": {
+    "total_records": 23,
+    "null_paper_ids": 0,
+    "duplicate_paper_ids": 2,
+    "empty_titles": 0,
+    "empty_summaries": 4,
+    "short_summaries": 4,
+    "stale_records": 1,
+    "missing_embeddings": 0
+  }
+}
