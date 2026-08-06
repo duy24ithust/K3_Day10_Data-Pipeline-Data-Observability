@@ -42,7 +42,8 @@ class LocalEmbeddingIndex:
 
     @staticmethod
     def _build_documents(df: pd.DataFrame) -> list[dict[str, Any]]:
-        records = df.to_dict(orient="records")
+        df_clean = df.fillna("")
+        records = df_clean.to_dict(orient="records")
         documents: list[dict[str, Any]] = []
         for index, row in enumerate(records):
             documents.append(
